@@ -9,4 +9,12 @@ if (!supabaseUrl || !supabaseAnonKey) {
   );
 }
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+  auth: {
+    persistSession: true,
+    autoRefreshToken: true,
+    // OAuth 리다이렉트로 돌아온 토큰(#access_token=...)은 AuthProvider에서 직접 처리한다.
+    // 이 환경에서 라이브러리 자동 감지(detectSessionInUrl)가 동작하지 않아 수동 처리로 대체.
+    detectSessionInUrl: false,
+  },
+});
