@@ -4,6 +4,7 @@ import { Transaction, categoryColor, categoryEmoji } from "@/types/transaction";
 import { formatCurrency } from "@/lib/format";
 import { categoryBreakdown } from "@/lib/stats";
 import { buildMonthlyCsv, downloadCsv } from "@/lib/export";
+import { downloadStatsImage } from "@/lib/exportImage";
 
 interface Props {
   year: number;
@@ -31,6 +32,10 @@ export default function StatsSection({
     downloadCsv(`가계부_${year}-${String(month).padStart(2, "0")}.csv`, csv);
   }
 
+  function handleDownloadImage() {
+    downloadStatsImage(year, month, transactions, income, expense);
+  }
+
   // 도넛 세그먼트 누적 offset 계산
   let acc = 0;
   const segments = expenseStats.map((s) => {
@@ -47,14 +52,24 @@ export default function StatsSection({
         <h2 className="flex items-center gap-1.5 text-base font-bold text-ink">
           📊 이번 달 통계
         </h2>
-        <button
-          onClick={handleDownload}
-          disabled={!hasData}
-          className="rounded-full bg-pink-100 px-3.5 py-1.5 text-xs font-bold text-pink-600 transition hover:bg-pink-200 disabled:cursor-not-allowed disabled:opacity-40"
-          title="이번 달 통계를 CSV 파일로 저장"
-        >
-          ⬇ 통계 다운로드
-        </button>
+        <div className="flex gap-2">
+          <button
+            onClick={handleDownloadImage}
+            disabled={!hasData}
+            className="rounded-full bg-pink-500 px-3 py-1.5 text-xs font-bold text-white transition hover:bg-pink-600 disabled:cursor-not-allowed disabled:opacity-40"
+            title="이번 달 통계를 이미지(PNG)로 저장"
+          >
+            🖼 이미지 저장
+          </button>
+          <button
+            onClick={handleDownload}
+            disabled={!hasData}
+            className="rounded-full bg-pink-100 px-3 py-1.5 text-xs font-bold text-pink-600 transition hover:bg-pink-200 disabled:cursor-not-allowed disabled:opacity-40"
+            title="이번 달 통계를 CSV 파일로 저장"
+          >
+            ⬇ CSV
+          </button>
+        </div>
       </div>
 
       {!hasData ? (
