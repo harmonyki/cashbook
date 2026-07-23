@@ -7,20 +7,20 @@ interface Props {
 
 export default function MonthSelector({ year, month, onPrev, onNext }: Props) {
   return (
-    <div className="flex items-center justify-center gap-4">
+    <div className="flex items-center justify-center gap-3">
       <button
         onClick={onPrev}
-        className="rounded-full px-3 py-1 text-lg text-zinc-500 hover:bg-black/5 dark:hover:bg-white/10"
+        className="grid h-9 w-9 place-items-center rounded-full bg-white/80 text-lg text-pink-500 shadow-sm ring-1 ring-pink-200 transition hover:bg-pink-100 active:scale-95"
         aria-label="이전 달"
       >
         ‹
       </button>
-      <p className="w-32 text-center text-base font-semibold">
+      <p className="min-w-36 rounded-full bg-white/70 px-5 py-1.5 text-center text-base font-semibold text-ink ring-1 ring-pink-200">
         {year}년 {month}월
       </p>
       <button
         onClick={onNext}
-        className="rounded-full px-3 py-1 text-lg text-zinc-500 hover:bg-black/5 dark:hover:bg-white/10"
+        className="grid h-9 w-9 place-items-center rounded-full bg-white/80 text-lg text-pink-500 shadow-sm ring-1 ring-pink-200 transition hover:bg-pink-100 active:scale-95"
         aria-label="다음 달"
       >
         ›

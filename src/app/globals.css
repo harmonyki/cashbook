@@ -1,26 +1,88 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* 핑크 파스텔 팔레트 */
+  --pink-50: #fff5f9;
+  --pink-100: #ffe7f1;
+  --pink-200: #ffd0e2;
+  --pink-300: #ffb0cd;
+  --pink-400: #ff85b0;
+  --pink-500: #ff5c96;
+  --pink-600: #f43f85;
+
+  --mint: #7fd8c3;
+  --sky: #8ec5ff;
+  --lemon: #ffd98a;
+  --lilac: #c9b6ff;
+
+  --ink: #6b4a5a;
+  --ink-soft: #a988a0;
+
+  --background: var(--pink-50);
+  --foreground: var(--ink);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-pink-50: var(--pink-50);
+  --color-pink-100: var(--pink-100);
+  --color-pink-200: var(--pink-200);
+  --color-pink-300: var(--pink-300);
+  --color-pink-400: var(--pink-400);
+  --color-pink-500: var(--pink-500);
+  --color-pink-600: var(--pink-600);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --font-sans: var(--font-jua), "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  color-scheme: light;
 }
 
 body {
-  background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background:
+    radial-gradient(1100px 480px at 12% -8%, var(--pink-100), transparent 60%),
+    radial-gradient(900px 460px at 100% 0%, #fff0f6, transparent 55%),
+    linear-gradient(180deg, var(--pink-50), #fff9fb 45%, var(--pink-50));
+  background-attachment: fixed;
+  min-height: 100%;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--pink-200);
+  border-radius: 999px;
+}
+
+/* 통통 튀는 마스코트 애니메이션 */
+@keyframes float-bob {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+  50% {
+    transform: translateY(-7px) rotate(2deg);
+  }
+}
+.animate-bob {
+  animation: float-bob 3.2s ease-in-out infinite;
+}
+
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+.animate-pop {
+  animation: pop-in 0.35s ease-out both;
 }

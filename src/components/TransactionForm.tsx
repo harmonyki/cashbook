@@ -6,12 +6,17 @@ import {
   INCOME_CATEGORIES,
   Transaction,
   TransactionType,
+  categoryEmoji,
 } from "@/types/transaction";
 import { todayString } from "@/lib/format";
 
 interface Props {
   onAdd: (transaction: Transaction) => void;
 }
+
+const inputClass =
+  "rounded-xl border border-pink-200 bg-white/90 px-3 py-2 text-sm text-ink outline-none transition focus:border-pink-400 focus:ring-2 focus:ring-pink-200";
+const labelClass = "text-xs font-medium text-ink-soft";
 
 export default function TransactionForm({ onAdd }: Props) {
   const [type, setType] = useState<TransactionType>("expense");
@@ -48,54 +53,54 @@ export default function TransactionForm({ onAdd }: Props) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col gap-4 rounded-xl border border-black/10 bg-white p-5 dark:border-white/10 dark:bg-zinc-900"
+      className="flex flex-col gap-4 rounded-3xl bg-white/80 p-5 shadow-sm ring-1 ring-pink-100"
     >
-      <div className="flex gap-2">
+      <div className="flex gap-2 rounded-2xl bg-pink-100/70 p-1">
         <button
           type="button"
           onClick={() => handleTypeChange("expense")}
-          className={`flex-1 rounded-lg py-2 text-sm font-medium transition-colors ${
+          className={`flex-1 rounded-xl py-2 text-sm font-semibold transition ${
             type === "expense"
-              ? "bg-red-500 text-white"
-              : "bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300"
+              ? "bg-pink-500 text-white shadow"
+              : "text-ink-soft hover:text-pink-500"
           }`}
         >
-          지출
+          🎀 지출
         </button>
         <button
           type="button"
           onClick={() => handleTypeChange("income")}
-          className={`flex-1 rounded-lg py-2 text-sm font-medium transition-colors ${
+          className={`flex-1 rounded-xl py-2 text-sm font-semibold transition ${
             type === "income"
-              ? "bg-blue-500 text-white"
-              : "bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300"
+              ? "bg-sky-400 text-white shadow"
+              : "text-ink-soft hover:text-sky-500"
           }`}
         >
-          수입
+          💗 수입
         </button>
       </div>
 
       <div className="grid grid-cols-2 gap-3">
         <div className="flex flex-col gap-1">
-          <label className="text-xs text-zinc-500">날짜</label>
+          <label className={labelClass}>날짜</label>
           <input
             type="date"
             value={date}
             onChange={(e) => setDate(e.target.value)}
-            className="rounded-lg border border-black/10 bg-transparent px-3 py-2 text-sm dark:border-white/10"
+            className={inputClass}
             required
           />
         </div>
         <div className="flex flex-col gap-1">
-          <label className="text-xs text-zinc-500">분류</label>
+          <label className={labelClass}>분류</label>
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            className="rounded-lg border border-black/10 bg-transparent px-3 py-2 text-sm dark:border-white/10"
+            className={inputClass}
           >
             {categories.map((c) => (
               <option key={c} value={c}>
-                {c}
+                {categoryEmoji(c)} {c}
               </option>
             ))}
           </select>
@@ -103,35 +108,40 @@ export default function TransactionForm({ onAdd }: Props) {
       </div>
 
       <div className="flex flex-col gap-1">
-        <label className="text-xs text-zinc-500">금액</label>
-        <input
-          type="number"
-          inputMode="numeric"
-          min={1}
-          placeholder="0"
-          value={amount}
-          onChange={(e) => setAmount(e.target.value)}
-          className="rounded-lg border border-black/10 bg-transparent px-3 py-2 text-sm dark:border-white/10"
-          required
-        />
+        <label className={labelClass}>금액</label>
+        <div className="relative">
+          <input
+            type="number"
+            inputMode="numeric"
+            min={1}
+            placeholder="0"
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+            className={`${inputClass} w-full pr-8`}
+            required
+          />
+          <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
+            원
+          </span>
+        </div>
       </div>
 
       <div className="flex flex-col gap-1">
-        <label className="text-xs text-zinc-500">메모</label>
+        <label className={labelClass}>메모</label>
         <input
           type="text"
           placeholder="메모 (선택)"
           value={memo}
           onChange={(e) => setMemo(e.target.value)}
-          className="rounded-lg border border-black/10 bg-transparent px-3 py-2 text-sm dark:border-white/10"
+          className={inputClass}
         />
       </div>
 
       <button
         type="submit"
-        className="rounded-lg bg-zinc-900 py-2.5 text-sm font-medium text-white transition-colors hover:bg-zinc-700 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300"
+        className="rounded-2xl bg-gradient-to-r from-pink-400 to-pink-500 py-3 text-sm font-bold text-white shadow-md transition hover:brightness-105 active:scale-[0.99]"
       >
-        추가하기
+        추가하기 ✨
       </button>
     </form>
   );
